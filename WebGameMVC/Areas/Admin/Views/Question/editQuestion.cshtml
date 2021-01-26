@@ -1,0 +1,45 @@
+﻿@model WebGameMVC.Areas.Admin.Data.DTO.QuestionModel
+@{
+    var question = ViewBag.Question;
+}
+<div class="col-md-6">
+    @using (Html.BeginForm("UpdateQuestion", "Question", new { questionID = ViewBag.QuestionID, stageID = ViewBag.StageID }, FormMethod.Post))
+    {
+        <div class="form-group">
+            <label>Môn: </label>
+            @Html.TextBoxFor(x => x.subID, new { @class = "form-control", @Value = (question.SubID == 1) ? "Toán" : "Toán" })
+        </div>
+        <div class="form-group">
+            <label>Khối: </label>
+            @Html.TextBoxFor(x => x.gradeID, new { @class = "form-control", @Value = (question.GradeID == 1) ? "10" : (question.GradeID == 2) ? "11" : "12" })
+        </div>
+        <div class="form-group">
+            <label>Câu hỏi (dạng latex): </label>
+            @Html.TextAreaFor(x => x.Question, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Đáp án A (dạng latex): </label>
+            @Html.TextAreaFor(x => x.answerA, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Đáp án B (dạng latex): </label>
+            @Html.TextAreaFor(x => x.answerB, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Đáp án C (dạng latex): </label>
+            @Html.TextAreaFor(x => x.answerC, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Đáp án D (dạng latex): </label>
+            @Html.TextAreaFor(x => x.answerD, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Đáp án đúng: </label>
+            @Html.TextBoxFor(x => x.rightAnswer, new { @class = "form-control", @Value = question.Right_Answer })
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Cập nhật</button>
+        </div>
+    }
+</div>
+

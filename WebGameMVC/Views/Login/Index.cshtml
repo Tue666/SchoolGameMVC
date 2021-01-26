@@ -1,0 +1,26 @@
+﻿@model WebGameMVC.Models.DTO.LoginModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="my-container">
+    <div class="container-bg">
+        <div class="login-panel">
+            <div class="panel">
+                <h1>Đăng nhập</h1>
+                @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <span>Tên đăng nhập</span>
+                        @Html.TextBoxFor(x => x.userName, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <span>Mật khẩu</span>
+                        @Html.PasswordFor(x => x.passWord, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <button type="submit" style="margin-left:100px" class="btn btn-success" >OK</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

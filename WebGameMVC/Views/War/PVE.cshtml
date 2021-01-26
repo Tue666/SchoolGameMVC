@@ -1,0 +1,252 @@
+﻿@model List<WebGameMVC.Models.EF.Question>
+@{
+    var user = (WebGameMVC.Models.EF.Account)ViewBag.User;
+    var stage = (WebGameMVC.Models.EF.Stage)ViewBag.Stage;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>War</title>
+    <link type="text/css" rel="stylesheet" href="/Assets/css/style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="wrapper-left">
+            <div class="animation-panel">
+                <div class="line"></div>
+            </div>
+            @{
+                var color = "";
+                if (stage.Level < 20)
+                {
+                    color = "#fff";
+                }
+                else if (stage.Level < 40)
+                {
+                    color = "green";
+                }
+                else if (stage.Level < 70)
+                {
+                    color = "yellow";
+                }
+                else
+                {
+                    color = "red";
+                }
+            }
+            <div class="user-border">
+                <img style="width:100%;height:100%" src="~/Assets/images/rank/panel/ThachDau.png" />
+                <div class="user-image">
+                    <img src="@user.Wings" />
+                </div>
+                <div class="user-image">
+                    <img src="@user.Avatar" />
+                </div>
+                @*<div class="user-medal">
+                        <img src="@medal" />
+                    </div>*@
+            </div>
+            <div class="vs-image">
+                <img src="~/Assets/images/vs.png" />
+            </div>
+            <div class="monster-border" style="box-shadow: 0 2px 30px @color;">
+                <div class="monster-image">
+                    <img src="@stage.AvatarMonster" />
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-middle">
+            <img src="~/Assets/images/div6.gif" style="position:absolute;width:100%;height:100%;" />
+            @{var i = 1;}
+            @foreach (var item in Model)
+            {
+                <div class="my-question my-fade">
+                    <div class="note">
+                        Chiến thắng để nhận nhiều vàng!
+                    </div>
+                    <div class="question-infor">
+                        <div class="question">
+                            <div style="position:absolute;top:10px;left:10px;">
+                                Câu hỏi @i:
+                            </div>
+                            @item.Question1
+                        </div>
+                        <div class="answer">
+                            <div class="user-answer">
+                                <input type="radio" name="answer-@i" value="A" /> @item.Answer_A
+                            </div>
+                            <div class="user-answer">
+                                <input type="radio" name="answer-@i" value="B" /> @item.Answer_B
+                            </div>
+                            <div class="user-answer">
+                                <input type="radio" name="answer-@i" value="C" /> @item.Answer_C
+                            </div>
+                            <div class="user-answer">
+                                <input type="radio" name="answer-@i" value="D" /> @item.Answer_D
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                i++;
+            }
+            <a id="prevBtn" style="visibility:hidden" onclick="plusSlide(-1)" href="#" class="btn-success"><span><i class="fa fa-angle-double-left"></i></span></a>
+            <a id="nextBtn" style="visibility:hidden" onclick="plusSlide(1)" href="#" class="btn-success"><span><i class="fa fa-angle-double-right"></i></span></a>
+        </div>
+        <div class="wrapper-right">
+            <table id="cd-panel" class="cooldown">
+                <tr style="font-size:55px;">
+                    <td colspan="3">Thời gian</td>
+                </tr>
+                <tr style="font-size:55px;">
+                    @{
+                        var time = stage.Time.Split(':');
+                        var minutes = time[0];
+                        var seconds = time[1];
+                    }
+                    <td id="minutes">@time[0]</td>
+                    <td>:</td>
+                    <td id="seconds">@time[1]</td>
+                </tr>
+                <tr>
+                    <td>Phút</td>
+                    <td></td>
+                    <td>Giây</td>
+                </tr>
+            </table>
+            <div class="button">
+                <div class="start">
+                    <a id="start" href="#">Bắt đầu</a>
+                </div>
+                <div class="end">
+                    <a id="end" style="visibility:hidden" href="#">Nộp bài</a>
+                </div>
+            </div>
+            <div class="backBtn">
+                @{
+                    var link = "/Dungeon/Index/" + ViewBag.dungeonID;
+                }
+                <a class="back" href="@link">Back</a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function check() {
+            var countQuestion = '@Model.Count()';
+            var i = 0;
+            $('input[type=radio]:checked').each(function () {
+                i = i + 1;
+            });
+            if (i < countQuestion) {
+                for (var j = 0; j < countQuestion; j++) {
+                    var radioName = "answer-" + (j + 1);
+                    var radioValue = $('input[name=' + radioName + ']:checked').val();
+                    if (radioValue == null) {
+                        alert("Chưa điền đáp án câu " + (j + 1));
+                    }
+                }
+            }
+            else {
+                finish();
+            }
+        }
+        function finish() {
+            var listAnswer = "";
+            for (var i = 0; i < @Model.Count(); i++) {
+                var radioName = "answer-" + (i + 1);
+                var radioValue = $('input[name=' + radioName + ']:radio:checked').val();
+                listAnswer = listAnswer + radioValue + " ";
+            }
+            var stageID = @stage.ID;
+            var dungeonID = @stage.DungeonID;
+            $.ajax({
+                url: '@Url.Action("CalPoint","War")',
+                data: {
+                    listAnswer: listAnswer,
+                    stageID: stageID
+                },
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        window.location.href = "/result?dungeonID=" + dungeonID + "&stageID=" + stageID + "&countRA=" + res.countRA;
+                    }
+                    else {
+                        window.location.href = "/result?dungeonID=" + dungeonID + "&stageID=" + stageID + "&countRA=" + res.countRA;
+                    }
+                }
+            });
+        }
+        var slideIndex = 1;
+        function plusSlide(n) {
+            slideIndex += n;
+            Question(slideIndex);
+        }
+        function Question(n) {
+            var slides = document.getElementsByClassName("my-question");
+            if (n < 1) {
+                slideIndex = slides.length;
+            }
+            if (n > slides.length) {
+                slideIndex = 1;
+            }
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+        function cooldown() {
+            const minutes = document.getElementById("minutes").innerHTML;
+            const seconds = document.getElementById("seconds").innerHTML;
+
+            var s = parseInt(seconds);
+            var m = parseInt(minutes);
+            if (m == 0 && s == 0) {
+                alert("Hết cmn giờ ehehe");
+                finish();
+            }
+            else {
+                if (m == 0) {
+                    document.getElementById("minutes").style.color = "red";
+                    document.getElementById("seconds").style.color = "red";
+                    document.getElementById("cd-panel").style.boxShadow = "0 0 5px 3px red";
+                }
+                if (s == 0) {
+                    s = 59;
+                    m -= 1;
+                }
+                else {
+                    s -= 1;
+                }
+
+                var strS = (s < 10) ? "0" + s : s;
+                var strM = (m < 10) ? "0" + m : m;
+
+                document.getElementById("minutes").textContent = strM;
+                document.getElementById("seconds").textContent = strS;
+
+                setTimeout(cooldown, 1000);
+            }
+        };
+        $('#start').on('click', function () {
+            cooldown();
+            Question(slideIndex);
+            document.getElementById("prevBtn").style.visibility = "visible";
+            document.getElementById("nextBtn").style.visibility = "visible";
+            document.getElementById("start").style.visibility = "hidden";
+            document.querySelector(".backBtn").style.visibility = "hidden";
+            document.getElementById("end").style.visibility = "visible";
+        });
+        $('#end').on('click', function () {
+            check();
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+﻿@{
+    var user = (WebGameMVC.Models.EF.Account)ViewBag.User;
+    var rank = ViewBag.Ranking;
+}
+<div style="position:absolute;width:25%;height:25%;right:4%;top:7%;z-index:11;">
+    <img style="width:100%;height:100%" src="@rank.Medal" />
+</div>
+<div class="user-panel">
+    <img src="@rank.Panel" />
+</div>
+<div class="user-top">
+    <div class="user-name">
+        <span style="color:#fff">Tên: </span>
+        @if (user.Level < 20)
+        {
+            <span style="color:#fff">@user.UserName</span>
+        }
+        else if (user.Level < 40)
+        {
+            <span style="color:green">@user.UserName</span>
+        }
+        else if (user.Level < 70)
+        {
+            <span style="color:yellow">@user.UserName</span>
+        }
+        else if (user.Level < 99)
+        {
+            <span style="color:red">@user.UserName</span>
+        }
+        else
+        {
+            <span style="color:red;border:15px solid #fff;border-image:url('/Assets/images/rank/panel/TD.png') 40 round;">@user.UserName</span>
+        }
+        
+    </div>
+    <div class="user-title">
+        <span style="color:#fff">Danh hiệu: </span> @Html.Raw(user.Title)
+    </div>
+</div>
+<div class="user-content">
+    <div style="width:100%;height:100%;position:absolute;top:0;z-index:1;">
+        <img class="user-avatar" src="@user.Avatar" />
+    </div>
+    <div style="width:100%;height:100%;position:absolute;top:0;">
+        @if (user.Wings != "")
+        {
+            <img src="@user.Wings" />
+        }
+    </div>
+</div>
+<div class="user-bottom">
+    <div class="level">
+        @{
+            var urlImage = "";
+            if (user.Level < 100)
+            {
+                urlImage = "/Assets/images/level/" + user.Level + ".png";
+            }
+            else
+            {
+                urlImage = "/Assets/images/level/max.gif";
+            }
+        }
+        <img style="width:33%;height:53%;" src="~/Assets/images/level/lv.png" /> <img style="width:40%;height:70%;" src="@urlImage" />
+    </div>
+    <div class="exp-sta" style="width:65%;height:100%;display:flex;flex-direction:column;justify-content:space-around">
+        <div style="width:100%;height:50%;">
+            <span style="width:100%;height:100%;color:#fff;">Năng lượng:  @user.Stamina</span>
+        </div>
+        <div style="width:100%;height:50%;">
+            <span style="width:100%;height:100%;color:#fff">Kinh nghiệm:  @user.Exp/100</span>
+        </div>
+    </div>
+</div>

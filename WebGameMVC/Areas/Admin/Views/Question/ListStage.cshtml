@@ -1,0 +1,45 @@
+﻿@model List<WebGameMVC.Models.EF.Stage>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Vị trí - X</th>
+            <th scope="col">Vị trí - Y</th>
+            <th scope="col">Hình</th>
+            <th scope="col">Loại</th>
+            <th scope="col">Kinh nghiệm</th>
+            <th scope="col">Tên ải</th>
+            <th scope="col">Thời gian</th>
+            <th scope="col">Tiền</th>
+            <th scope="col">Năng lượng</th>
+            <th scope="col">Cấp</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Tác vụ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.ID</th>
+                <td>@item.Location_X</td>
+                <td>@item.Location_Y</td>
+                <td><img style="width:80px;height:80px;" src="@item.AvatarMonster" /></td>
+                <td>@item.Type</td>
+                <td>@item.Exp</td>
+                <td>@item.NameStage</td>
+                <td>@item.Time</td>
+                <td>@item.Money</td>
+                <td>@item.Stamina</td>
+                <td>@item.Level</td>
+                <td>@item.Status</td>
+                @{
+                    var status = (item.Status == true) ? "Khóa" : "Mở";
+                }
+                <td><a href="/Admin/Question/DetailStage?stageID=@item.ID">Câu hỏi</a> | <a onclick="showeditStage(@item.ID)" href="#">Sửa</a> | <a onclick="changeStatusStage(@item.ID)" href="#">@status</a></td>
+            </tr>
+        }
+        <tr><td><a href="#">Thêm</a></td></tr>
+    </tbody>
+</table>

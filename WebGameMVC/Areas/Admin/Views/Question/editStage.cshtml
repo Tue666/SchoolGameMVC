@@ -1,0 +1,69 @@
+﻿@model WebGameMVC.Models.EF.Stage
+@{ 
+    var stage = ViewBag.Stage;
+}
+<div class="col-md-4">
+    <div class="row">
+        <h1>Cập nhật ải</h1>
+    </div>
+    <div class="col-md-12">
+        @using (Html.BeginForm("UpdateStage", "Question", new { stageID = stage.ID }, FormMethod.Post))
+        {
+            <div class="form-group">
+                <label>Vị trí X: </label>
+                @Html.TextBoxFor(x => x.Location_X, new { @class = "form-control", @Value = stage.Location_X })
+            </div>
+            <div class="form-group">
+                <label>Vị trí Y: </label>
+                @Html.TextBoxFor(x => x.Location_Y, new { @class = "form-control", @Value = stage.Location_Y })
+            </div>
+            <div class="form-group">
+                <label>Chương: </label>
+                @Html.TextBoxFor(x => x.DungeonID, new { @class = "form-control", @Value = stage.DungeonID })
+            </div>
+            <div class="form-group">
+                <label>Kinh nghiệm: </label>
+                @Html.TextBoxFor(x => x.Exp, new { @class = "form-control", @Value = stage.Exp })
+            </div>
+            <div class="form-group">
+                <label>Loại (0-Thường, 1-BOSS): </label>
+                @Html.TextBoxFor(x => x.Type, new { @class = "form-control", @Value = stage.Type })
+            </div>
+            <div class="form-group">
+                <label>Hình (nhập số tương ứng hình bên): </label>
+                @Html.TextBoxFor(x => x.AvatarMonster, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Tên ải: </label>
+                @Html.TextBoxFor(x => x.NameStage, new { @class = "form-control", @Value = stage.NameStage })
+            </div>
+            <div class="form-group">
+                <label>Thời gian (Định dạng mm:ss): </label>
+                @Html.TextBoxFor(x => x.Time, new { @class = "form-control", @Value = stage.Time })
+            </div>
+            <div class="form-group">
+                <label>Tiền: </label>
+                @Html.TextBoxFor(x => x.Money, new { @class = "form-control", @Value = stage.Money })
+            </div>
+            <div class="form-group">
+                <label>Năng lương: </label>
+                @Html.TextBoxFor(x => x.Stamina, new { @class = "form-control", @Value = stage.Stamina })
+            </div>
+            <div class="form-group">
+                <label>Cấp: </label>
+                @Html.TextBoxFor(x => x.Level, new { @class = "form-control", @Value = stage.Level })
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Cập nhật</button>
+            </div>
+        }
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="row">
+        <h1>Nhấp để xem hình ảnh   <a onclick="showImage()" class="btn btn-success">Xem</a></h1>
+    </div>
+    <div id="partialDivImage" class="scroll-partialDivImage">
+
+    </div>
+</div>

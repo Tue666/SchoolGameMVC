@@ -1,0 +1,132 @@
+﻿@model WebGameMVC.Models.EF.Account
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var ranking = ViewBag.Ranking;
+}
+<div class="user-infor-container">
+    <div class="wrapper-user-infor">
+        <div class="user-infor-top">
+            <div class="user-infor-border">
+                @if (ranking.Border != null)
+                {
+                    <img src="@ranking.Border" />
+                }
+            </div>
+            <div class="wing-left">
+                <img src="~/Assets/images/wing-left.gif" />
+            </div>
+            <div style="width:30%;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+                <div>
+                    @if (Model.Level < 20)
+                    {
+                        <span style="color:#fff;font-family:Papyrus;font-size:1.2em;">@Model.UserName</span>
+                    }
+                    else if (Model.Level < 40)
+                    {
+                        <span style="color:green;font-family:Papyrus;font-size:1.2em;">@Model.UserName</span>
+                    }
+                    else if (Model.Level < 70)
+                    {
+                        <span style="color:yellow;font-family:Papyrus;font-size:1.2em;">@Model.UserName</span>
+                    }
+                    else if (Model.Level < 99)
+                    {
+                        <span style="color:red;font-family:Papyrus;font-size:1.2em;">@Model.UserName</span>
+                    }
+                    else
+                    {
+                        <span style="font-size:1.2em;font-family:Papyrus;color:red;border:15px solid #fff;border-image:url('/Assets/images/rank/panel/TD.png') 40 round;">@Model.UserName</span>
+                    }
+                </div>
+                <div>
+                    <span>@Html.Raw(Model.Title)</span>
+                </div>
+            </div>
+            <div class="wing-right">
+                <img src="~/Assets/images/wing-right.gif" />
+            </div>
+        </div>
+        <div class="user-infor-bottom">
+            <div style="width:40%;position:relative">
+                <div style="width:100%;height:100%;position:absolute;z-index:1;">
+                    <img style="width:100%;height:100%" src="@Model.Avatar" />
+                </div>
+                @if (Model.Wings != "")
+                {
+                    <div style="width:100%;height:100%;position:absolute;top:0">
+                        <img style="width:100%;height:100%" src="@Model.Wings" />
+                    </div>
+                }
+                <div style="position:absolute;top:-11%;right:-19%;width:40%;height:40%;">
+                    @if (Model.ID == 1)
+                    {
+                        <img style="width:100%;height:100%" src="~/Assets/images/pet/0.gif" />
+                    }
+                </div>
+            </div>
+            <div style="width:40%;display:flex;flex-direction:column;justify-content:space-around">
+                <div style="width:100%;height:39%;display:flex;justify-content:center">
+                    @if (ranking.ID <= 6)
+                    {
+                        <div style="width:45%;height:100%;">
+                            <img style="width:100%;height:100%" src="@ranking.Medal" />
+                        </div>
+                        <div style="width:60%;height:100%;display:flex;flex-direction:column;justify-content:center;color:#fff;">
+                            <span>@ranking.Name</span>
+                            <span>Kinh nghiệm: @Model.RankExp/100</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="width:45%;height:100%;justify-content:center;">
+                            <img style="width:100%;height:100%" src="@ranking.Medal" />
+                        </div>
+                    }
+                </div>
+                <div style="width:100%;height:60%;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-around">
+                    <div>
+                        <span>Trường: </span> <span>@Model.SchoolName</span>
+                    </div>
+                    <div>
+                        <span>Khối: </span> <span>@Model.Grade</span>
+                    </div>
+                    <div>
+                        <span>Lớp: </span> <span>@Model.Class</span>
+                    </div>
+                    <div>
+                        @{
+                            var sex = (Model.Sex == 0) ? "Nữ" : "Nam";
+                        }
+                        <span>Giới tính: </span> <span>@sex</span>
+                    </div>
+                    <div style="position:relative">
+                        <span>Tiền: </span> <span>@Model.Money</span><img style="position:absolute;top:0;right:-20%;width:15%;height:95%" src="~/Assets/images/money.png" />
+                    </div>
+                    <div>
+                        <span>Ngày tạo: </span> <span>@Model.CreateDay</span>
+                    </div>
+                    <div>
+                        <span>Tổng trận: </span> <span>@Model.TotalBattle</span>
+                    </div>
+                    <div>
+                        <span>Số trận thắng: </span> <span>@Model.WinBattle</span>
+                    </div>
+                    <div>
+                        @{
+                            var LoseBattle = Model.TotalBattle - Model.WinBattle;
+                        }
+                        <span>Số trận thua: </span> <span>@LoseBattle</span>
+                    </div>
+                    <div>
+                        @{
+                            var percent = (Model.WinBattle * 100) / Model.TotalBattle;
+                        }
+                        <span>Tỉ lệ thắng: </span> <span>@percent %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

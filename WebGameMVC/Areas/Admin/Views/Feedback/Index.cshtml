@@ -1,0 +1,68 @@
+﻿@model List<WebGameMVC.Models.EF.Feedback>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section jsFooterAdmin{
+    <script type="text/javascript">
+        function changeStatusFeedback(feedbackID) {
+            $.ajax({
+                url: '@Url.Action("ChangeStatusFeedback", "Feedback")',
+                data: { feedbackID: feedbackID },
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        window.location.href = "/Admin/Feedback/Index";
+                    }
+                }
+            })
+        }
+        function showreadFeedback(feedbackID) {
+            $('#partialDivFeedback').load('/Admin/Feedback/readFeedback?feedbackID=' + feedbackID);
+        }
+    </script>
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-7">
+            <h1>Toàn bộ góp ý</h1>
+        </div>
+        <div class="col-md-5">
+            <h1>Thông tin</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Người gửi</th>
+                        <th scope="col">Tiêu đề</th>
+                        <th scope="col">Nội dung</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Tác vụ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.ID</th>
+                            <td>@item.UserName</td>
+                            <td>@item.Title</td>
+                            <td>@item.Content</td>
+                            <td>@item.Status</td>
+                            <td><a onclick="showreadFeedback(@item.ID)" href="#">Đọc</a> | @if (item.Status == false)
+                            { <a onclick="changeStatusFeedback(@item.ID)" href="#" style="color:red"><i class="fa fa-exclamation"></i></a>}
+                            else { <a onclick="changeStatusFeedback(@item.ID)" style="color:green" href="#"><i class="fa fa-check"></i></a>}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="partialDivFeedback" class="col-md-5">
+
+        </div>
+    </div>
+</div>

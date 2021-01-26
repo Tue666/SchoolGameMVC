@@ -1,0 +1,152 @@
+﻿@{
+    var userSession = (WebGameMVC.Commons.Login.UserModel)Session[WebGameMVC.Commons.Login.UserSession.USER_SESSION];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trang chủ</title>
+    <link type="text/css" rel="stylesheet" href="/Assets/css/style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <div class="header-top">
+        <div class="logo">
+
+        </div>
+    </div>
+    <div class="header-bottom">
+        <div class="navigation">
+            <div class="nav-account">
+                @if (userSession != null)
+                {
+                    Html.RenderAction("UserPanel", "Home");
+                }
+                else
+                {
+                    <ul class="log-regis">
+                        <li class="login"><a href="/Login/Index"><i class="fa fa-sign-in"></i>Đăng nhập</a></li>
+                        <li class="regis"><a href="/Login/Regis"><i class="fa fa-user-plus"></i>Đăng ký</a></li>
+                    </ul>
+                }
+            </div>
+            <div class="nav-menu">
+                <ul class="menu-bar">
+                    <li class="act"><a href="/Home/Index"><i class="fa fa-home"></i>Trang chủ</a></li>
+                    <li class="account-item">
+                        <a href="#">
+                            <i class="fa fa-user-circle-o"></i>Tài khoản
+                            <span><i class="fa fa-chevron-right"></i></span>
+                        </a>
+                    </li>
+                    <li class="dungeon-item"><a href="#"><i class="fa fa-firefox"></i>PVE</a></li>
+                    <li><a href="/Shop/ShopAvatar"><i class="fa fa-shopping-basket"></i>Shop</a></li>
+                    <li class="ranking-item">
+                        <a href="#">
+                            <i class="fa fa-university"></i>Xếp hạng
+                            <span><i class="fa fa-chevron-right"></i></span>
+                        </a>
+                    </li>
+                    @if (userSession != null)
+                    {
+                        if (userSession.type == 1)
+                        {
+                            <li><a href="/Admin/Home/Index"><i class="fa fa-lock"></i>Admin</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="/Feedback/Index"><i class="fa fa-file-text"></i>Góp ý</a></li>
+                        }
+                    }
+                </ul>
+
+                <!-- Account menu  -->
+                <ul class="account-drop">
+                    <li class="back-account act"><a href="#"><i class="fa fa-chevron-left"></i>Tài khoản</a></li>
+                    @{
+                        long userID = 0;
+                        if (userSession != null)
+                        {
+                            userID = userSession.id;
+                        }
+                    }
+                    <li class="child"><a href="/Account/UserInfor?userID=@userID"><i class="fa fa-info-circle"></i>Thông tin</a></li>
+                    <li class="child"><a href="/Collection/Index?userID=@userID&categoryID=1"><i class="fa fa-bookmark"></i>Bộ sưu tập</a></li>
+                    <li class="child"><a href="#"><i class="fa fa-pencil"></i>Cập nhật</a></li>
+                    <li class="child"><a href="/Login/LogOut"><i class="fa fa-sign-out"></i>Đăng xuất</a></li>
+                </ul>
+
+                <!-- Ranking menu  -->
+                <ul class="ranking-drop">
+                    <li class="back-ranking act"><a href="#"><i class="fa fa-chevron-left"></i>Xếp hạng</a></li>
+                    <li class="child"><a href="/Rank/TopRank?type=1"><i class="fa fa-level-up"></i>Cấp</a></li>
+                    <li class="child"><a href="/Rank/TopRank?type=2"><i class="fa fa-gg"></i>Hạng</a></li>
+                </ul>
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+    <script type="text/javascript">
+        $('.dungeon-item').on('click', function () {
+            $.ajax({
+                url: '/Home/CheckLogin',
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        window.location.href = "/Dungeon/Index/1";
+                    }
+                    else {
+                        alert('Đăng nhập để sử dụng chức năng !');
+                    }
+                }
+            });
+        });
+        const menu_bar = document.querySelector(".menu-bar");
+        const account_drop = document.querySelector(".account-drop");
+        const ranking_drop = document.querySelector(".ranking-drop");
+        const account_item = document.querySelector(".account-item");
+        const ranking_item = document.querySelector(".ranking-item");
+        const back_account = document.querySelector(".back-account");
+        const back_ranking = document.querySelector(".back-ranking");
+
+        account_item.onclick = function () {
+            $.ajax({
+                url: '/Home/CheckLogin',
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        menu_bar.style.marginLeft = "-100%";
+                        account_drop.style.display = "block";
+                    }
+                    else {
+                        alert('Đăng nhập để sử dụng chức năng !');
+                    }
+                }
+            });
+        };
+        ranking_item.onclick = function () {
+            menu_bar.style.marginLeft = "-100%";
+            ranking_drop.style.display = "block";
+        };
+        back_account.onclick = function () {
+            menu_bar.style.marginLeft = "0";
+            account_drop.style.display = "none";
+        };
+        back_ranking.onclick = function () {
+            menu_bar.style.marginLeft = "0";
+            ranking_drop.style.display = "none";
+        };
+
+        $('.nav-menu ul li').click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+        });
+    </script>
+    @RenderSection("jsFooter", false)
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

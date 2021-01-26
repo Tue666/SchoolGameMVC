@@ -1,0 +1,71 @@
+﻿@model WebGameMVC.Models.DTO.RegisModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter {
+    <script type="text/javascript">
+        $('.radio-male').off('click').on('click', function () {
+            $('.male').addClass("active");
+            $('.female').removeClass("active");
+        });
+        $('.radio-female').off('click').on('click', function () {
+            $('.female').addClass("active");
+            $('.male').removeClass("active");
+        });
+        $('.btn-regis').on('click', function () {
+            alert('Đăng ký thành công. Đăng nhập lại để vào tài khoản.');
+        });
+    </script>
+}
+<div class="my-container">
+    <div class="container-bg">
+        <div class="login-panel">
+            <div class="r-panel">
+                <h1>Đăng ký</h1>
+                @using (Html.BeginForm("Regis","Login",FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <span>Tên đăng nhập</span>
+                        @Html.TextBoxFor(x => x.userName, new { @class = "form-control" })
+                        @*<input type="text" name="userName" class="form-control" />*@
+                    </div>
+                    <div class="form-group">
+                        <span>Mật khẩu</span>
+                        @Html.PasswordFor(x => x.passWord, new { @class = "form-control" })
+                        @*<input type="password" name="passWord" class="form-control" />*@
+                    </div>
+                    <div class="form-group">
+                        <span>Trường</span>
+                        @Html.TextBoxFor(x => x.userSchool, new { @class = "form-control" })
+                        @*<input type="text" name="userSchool" class="form-control" />*@
+                    </div>
+                    <div class="form-group">
+                        <span>Khối</span>
+                        @Html.TextBoxFor(x => x.userGrade, new { @class = "form-control" })
+                        @*<input type="text" name="userGrade" class="form-control" />*@
+                    </div>
+                    <div class="check-box form-group">
+                        <span style="display:block;">Giới tính</span>
+                        <div class="male active" style="display:inline-block">
+                            <img src="~/Assets/images/char/male/basic.png" />
+                            <div class="check">
+                                <input class="radio-male" type="radio" name="sex" checked="checked" value="1" /> Nam
+                            </div>
+                        </div>
+                        <div class="female" style="display:inline-block">
+                            <img src="~/Assets/images/char/female/basic.png" />
+                            <div class="check">
+                                <input class="radio-female" type="radio" name="sex" value="2" /> Nữ
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="form-group" style="margin-left:80px">
+                        <button type="submit" class="btn btn-success btn-regis">Đăng ký</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

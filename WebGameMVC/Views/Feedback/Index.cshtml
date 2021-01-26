@@ -1,0 +1,30 @@
+﻿@model WebGameMVC.Models.EF.Feedback
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script type="text/javascript">
+        $('#sendFeedback').on('click', function () {
+            alert("Gửi thành công!");
+        })
+    </script>
+}
+<div class="my-container" style="display:flex;justify-content:center;align-items:center;">
+    <div class="feedback-wrapper">
+        @using (Html.BeginForm("addFeedBack", "Feedback", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label style="color:#fff">Tiêu đề: </label>
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label style="color:#fff;">Nội dung: </label>
+                @Html.TextAreaFor(x => x.Content, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <button id="sendFeedback" type="submit" class="btn btn-success">Gửi</button>
+                <a href="/Feedback/HistoryFeedBack" id="historyFeedback" class="btn btn-primary">Lịch sử gửi</a>
+            </div>
+        }
+    </div>
+</div>

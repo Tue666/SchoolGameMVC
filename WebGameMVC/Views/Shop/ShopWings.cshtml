@@ -1,0 +1,45 @@
+﻿@model List<WebGameMVC.Models.EF.Wing>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter {
+    <script type="text/javascript">
+        $('.buy').on('click', function () {
+            alert("Tính năng chưa mở!");
+        });
+        $('.scrollTop').on('click', function () {
+            $('.things-collec').scrollTop(0);
+        });
+        $('.things-collec').scroll(function () {
+            sessionStorage.scrollPos = $(this).scrollTop();
+        });
+        window.onload = function () {
+            $('.things-collec').scrollTop(sessionStorage.scrollPos || 0);
+        };
+    </script>
+}
+<div class="my-container">
+    <img class="bg-collection" src="~/Assets/images/bgCollection.png" />
+    <div class="collection-container">
+        <div class="menu-collec">
+            <a href="/Shop/ShopAvatar">Avatar</a>
+            <a class="my-active" href="/Shop/ShopWings">Wings</a>
+            <a href="/Shop/ShopPet">Pet</a>
+        </div>
+        <div class="things-collec">
+            @foreach (var item in Model)
+            {
+                <div class="collec-item">
+                    <div class="collec-image">
+                        <img src="@item.Image" />
+                    </div>
+                    <div class="collec-button" style="display:flex;justify-content:space-around;align-items:center">
+                        <span>1000</span>
+                        <a class="buy" style="text-decoration:none;" href="#">Mua</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <a class="scrollTop"><i style="margin:0" class="fa fa-arrow-up"></i></a>
+</div>

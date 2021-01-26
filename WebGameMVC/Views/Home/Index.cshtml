@@ -1,0 +1,17 @@
+﻿@{ 
+    var user = ViewBag.User;
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="my-container">
+    @if (user != null)
+    {
+        <div class="user-pet">
+            @if (user.ID == 1)
+            {
+                <img src="~/Assets/images/pet/0.gif" />
+            }
+        </div>
+    }
+</div>

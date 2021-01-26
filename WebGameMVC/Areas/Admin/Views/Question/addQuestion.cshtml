@@ -1,0 +1,50 @@
+﻿@model WebGameMVC.Areas.Admin.Data.DTO.QuestionModel
+
+<div class="col-md-6">
+    @using (Html.BeginForm("InsertQuestion", "Question", new { stageID = ViewBag.StageID }, FormMethod.Post))
+    {
+        <div class="form-group">
+            <label>Môn: </label>
+            @Html.TextBoxFor(x => x.subID, new { @class = "form-control" })
+            @*<input type="text" class="form-control" name="SubID">*@
+        </div>
+        <div class="form-group">
+            <label>Khối: </label>
+            @Html.TextBoxFor(x => x.gradeID, new { @class = "form-control" })
+            @*<input type="text" class="form-control" name="GradeID">*@
+        </div>
+        <div class="form-group">
+            <label>Câu hỏi (dạng latex): </label>
+            @Html.TextAreaFor(x => x.Question, new { @class = "form-control" })
+            @*<textarea class="form-control" name="Question"></textarea>*@
+        </div>
+        <div class="form-group">
+            <label>Đáp án A (dạng latex): </label>
+            @Html.TextAreaFor(x => x.answerA, new { @class = "form-control" })
+            @*<textarea class="form-control" name="AnswerA"></textarea>*@
+        </div>
+        <div class="form-group">
+            <label>Đáp án B (dạng latex): </label>
+            @Html.TextAreaFor(x => x.answerB, new { @class = "form-control" })
+            @*<textarea class="form-control" name="AnswerB"></textarea>*@
+        </div>
+        <div class="form-group">
+            <label>Đáp án C (dạng latex): </label>
+            @Html.TextAreaFor(x => x.answerC, new { @class = "form-control" })
+            @*<textarea class="form-control" name="AnswerC"></textarea>*@
+        </div>
+        <div class="form-group">
+            <label>Đáp án D (dạng latex): </label>
+            @Html.TextAreaFor(x => x.answerD, new { @class = "form-control" })
+            @*<textarea class="form-control" name="AnswerD"></textarea>*@
+        </div>
+        <div class="form-group">
+            <label>Đáp án đúng: </label>
+            @Html.TextAreaFor(x => x.rightAnswer, new { @class = "form-control" })
+            @*<input type="text" class="form-control" name="RightAnswer" />*@
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Thêm</button>
+        </div>
+    }
+</div>

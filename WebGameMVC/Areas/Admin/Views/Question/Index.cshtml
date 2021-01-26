@@ -1,0 +1,103 @@
+﻿@model List<WebGameMVC.Models.EF.Dungeon>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section jsFooterAdmin{
+    <script type="text/javascript">
+        function showImage() {
+            $('#partialDivImage').load('/Admin/User/showImage');
+        }
+        function showeditStage(stageID) {
+            $('#partialDivUpdateStage').load('/Admin/Question/editStage?stageID=' + stageID);
+        }
+        function changeStatusStage(stageID) {
+             $.ajax({
+                url: '@Url.Action("ChangeStatusStage", "Question")',
+                data: { stageID: stageID},
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        window.location.href = "/Admin/Question/Index";
+                    }
+                }
+            }) 
+        }
+        function changeStatusDungeon(dungeonID) {
+            @*$.ajax({
+                url: '@Url.Action("ChangeStatusDungeon", "Question")',
+                data: { dungeonID: dungeonID },
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        window.location.href = "/Admin/Question/Index";
+                    }
+                }
+            })*@
+        }
+        detailDung(1);
+        listStage(1);
+        function detailDung(dungeonID) {
+            $('#partialDivDungeonDetail').load('/Admin/Question/DetailDung?dungeonID=' + dungeonID);
+        }
+        function listStage(dungeonID) {
+            $('#partialDivStage').load('/Admin/Question/ListStage?dungeonID=' + dungeonID);
+        }
+    </script>
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Chương</h1>
+        </div>
+        <div class="col-md-6">
+            <h1>Thông tin chương</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên chương</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Tác vụ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.ID</th>
+                            <td>@item.NameDungeon</td>
+                            <td>@item.Status</td>
+                            @{ 
+                                var status = (item.Status == true) ? "Khóa" : "Mở";
+                            }
+                            <td><a onclick="detailDung(@item.ID), listStage(@item.ID)" href="#">Xem</a> | <a href="#">Sửa</a> | <a onclick="changeStatusDungeon(@item.ID)" href="#">@status</a></td>
+                        </tr>
+                    }
+                    <tr><td><a href="#">Thêm</a></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="partialDivDungeonDetail" class="col-md-6" style="font-size:larger;font-weight:bold">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Ải theo chương</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div id="partialDivStage" class="col-md-12">
+            
+        </div>
+    </div>
+    <div id="partialDivUpdateStage" class="row">
+        
+    </div>
+</div>

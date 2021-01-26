@@ -1,0 +1,42 @@
+﻿@model WebGameMVC.Models.EF.Feedback
+
+<div class="row">
+    <div class="col-md-4">
+        <span>Người gửi: </span>
+    </div>
+    <div class="col-md-8">
+        @Model.UserName
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <span>Tiêu đề: </span>
+    </div>
+    <div class="col-md-8">
+        @Model.Title
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <span>Nội dung: </span>
+    </div>
+    <div class="col-md-8">
+        @Model.Content
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <span>Trạng thái: </span>
+    </div>
+    <div class="col-md-8">
+        @if (Model.Status == false)
+        {
+            <span style="color:red">Chưa xem</span>
+            <button onclick="changeStatusFeedback(@ViewBag.FeedbackID)" class="btn btn-danger">Đánh dấu đã xem</button>
+        }
+        else
+        {
+            <span>Đã xem</span>
+        }
+    </div>
+</div>

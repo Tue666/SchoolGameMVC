@@ -1,0 +1,84 @@
+﻿@model List<WebGameMVC.Models.EF.Question>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section jsFooterAdmin{
+    <script type="text/javascript">
+        function changeStatusQuestion(questionID, stageID) {
+            $.ajax({
+                url: '@Url.Action("ChangeStatusQuestion", "Question")',
+                data: { questionID: questionID },
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        window.location.href = "/Admin/Question/DetailStage?stageID=" + stageID;
+                    }
+                }
+            })
+        }
+        function showeditQuestion(questionID, stageID) {
+            $('#partialDivQuestion').load('/Admin/Question/editQuestion?questionID=' + questionID + '&stageID=' + stageID);
+        }
+        function showaddQuestion(stageID) {
+            $('#partialDivQuestion').load('/Admin/Question/addQuestion?stageID=' + stageID);
+        }
+    </script>
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Câu hỏi theo ải</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Môn</th>
+                        <th scope="col">Khối</th>
+                        <th scope="col">Câu hỏi</th>
+                        <th scope="col">Câu A</th>
+                        <th scope="col">Câu B</th>
+                        <th scope="col">Câu C</th>
+                        <th scope="col">Câu D</th>
+                        <th scope="col">Câu đúng</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Tác vụ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.ID</th>
+                            @{ 
+                                var sub = (item.SubID == 1) ? "Toán" : "Toán";
+                                var grade = (item.GradeID == 1) ? "10" : (item.GradeID == 2) ? "11" : "12";
+                            }
+                            <td>@sub</td>
+                            <td>@grade</td>
+                            <td>@item.Question1</td>
+                            <td>@item.Answer_A</td>
+                            <td>@item.Answer_B</td>
+                            <td>@item.Answer_C</td>
+                            <td>@item.Answer_D</td>
+                            <td>@item.Right_Answer</td>
+                            <td>@item.Status</td>
+                            @{ 
+                                var status = (item.Status == true) ? "Khóa" : "Mở";
+                            }
+                            <td><a onclick="showeditQuestion(@item.ID, @ViewBag.StageID)" href="#">Sửa</a> | <a onclick="changeStatusQuestion(@item.ID, @ViewBag.StageID)" href="#">@status</a></td>
+                        </tr>
+                    }
+                    <tr><td><a onclick="showaddQuestion(@ViewBag.StageID)" href="#">Thêm</a> | <a href="/Admin/Question/Index">Quay lại</a></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="partialDivQuestion" class="row">
+
+    </div>
+</div>
