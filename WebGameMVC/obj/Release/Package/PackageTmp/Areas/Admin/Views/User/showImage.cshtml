@@ -1,0 +1,14 @@
+﻿@model List<WebGameMVC.Models.EF.Avatar>
+
+
+@{
+    var i = 1;
+}
+@foreach (var item in Model)
+{
+    <div class="scroll-bt">
+        <span style="display:block;text-align:center;">@i</span>
+        <img style="width:100%;height:100%" src="@item.Image" />
+    </div>
+    i++;
+}

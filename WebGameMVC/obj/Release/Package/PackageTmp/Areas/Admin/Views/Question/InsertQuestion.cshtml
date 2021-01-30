@@ -1,0 +1,59 @@
+﻿@model WebGameMVC.Areas.Admin.Data.DTO.QuestionModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section jsFooterAdmin{
+    <script>
+        var editor = CKEDITOR.replaceAll('txtContent', { customConfig: '/Areas/Assets/js/plugins/ckeditor/config.js'})
+    </script>
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Thêm câu hỏi</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("InsertQuestion", "Question", new {dungeonID = ViewBag.DungeonID, stageID = ViewBag.StageID }, FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Môn: </label>
+                    @Html.TextBoxFor(x => x.subID, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Khối: </label>
+                    @Html.TextBoxFor(x => x.gradeID, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Câu hỏi (dạng latex): </label>
+                    @Html.TextAreaFor(x => x.Question, new { @class = "form-control txtContent" })
+                </div>
+                <div class="form-group">
+                    <label>Đáp án A (dạng latex): </label>
+                    @Html.TextAreaFor(x => x.answerA, new { @class = "form-control txtContent" })
+                </div>
+                <div class="form-group">
+                    <label>Đáp án B (dạng latex): </label>
+                    @Html.TextAreaFor(x => x.answerB, new { @class = "form-control txtContent" })
+                </div>
+                <div class="form-group">
+                    <label>Đáp án C (dạng latex): </label>
+                    @Html.TextAreaFor(x => x.answerC, new { @class = "form-control txtContent" })
+                </div>
+                <div class="form-group">
+                    <label>Đáp án D (dạng latex): </label>
+                    @Html.TextAreaFor(x => x.answerD, new { @class = "form-control txtContent" })
+                </div>
+                <div class="form-group">
+                    <label>Đáp án đúng: </label>
+                    @Html.TextAreaFor(x => x.rightAnswer, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Thêm</button>
+                    <a href="/Admin/Question/DetailStage?dungeonID=@ViewBag.DungeonID&stageID=@ViewBag.StageID" class="btn btn-primary">Quay về</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

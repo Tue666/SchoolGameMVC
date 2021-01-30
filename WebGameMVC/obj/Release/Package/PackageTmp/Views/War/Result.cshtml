@@ -1,0 +1,56 @@
+﻿@{ 
+    var stage = ViewBag.Stage;
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="my-container">
+    <div class="result-panel">
+        <div class="panel-top">
+            @if (ViewBag.CountRA == ViewBag.TotalQues)
+            {
+                <img src="~/Assets/images/win.gif" />
+            }
+            else
+            {
+                <img src="~/Assets/images/lose.gif" />
+            }
+        </div>
+        <div class="panel-bottom">
+            <div style="width:52%;">
+                <div class="rewards">
+                    Đúng @ViewBag.CountRA / @ViewBag.TotalQues. Phần thưởng:
+                    <br />
+                    <br />
+                    @{ 
+                        var exp = 0;
+                        if(ViewBag.CountRA == ViewBag.TotalQues)
+                        {
+                            exp = stage.Exp;
+                        }
+                        else
+                        {
+                            exp = ((stage.Exp * ViewBag.CountRA) / ViewBag.TotalQues);
+                        }
+                    }
+                    <span>Exp: + @exp <i class="fa fa-reply" style="color:#0aff0a;transform:rotate(90deg);"></i> </span>
+                </div>
+                <div class="rewards">
+                    <span>Gold: + @stage.Money <i class="fa fa-reply" style="color:#0aff0a;transform:rotate(90deg);"></i> </span>
+                </div>
+                <div class="rewards">
+                    <span>Stamina: - @stage.Stamina <i class="fa fa-share" style="color:#ff1d1d;transform:rotate(90deg);"></i> </span>
+                </div>
+            </div>
+            @if (ViewBag.CountRA == ViewBag.TotalQues)
+            {
+                <div class="reward-avatar my-fade">
+                    <img src="@stage.AvatarMonster" />
+                </div>
+            }
+        </div>
+        <div style="height:10%;display:flex;justify-content:center;align-items:center;">
+            <a class="OKBtn" href="/Dungeon/Index/@ViewBag.DungeonID">Đồng ý</a>
+        </div>
+    </div>
+</div>

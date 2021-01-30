@@ -19,16 +19,16 @@ namespace WebGameMVC.Models.EF
         [StringLength(500)]
         public string Question1 { get; set; }
 
-        [StringLength(100)]
+        [StringLength(500)]
         public string Answer_A { get; set; }
 
-        [StringLength(100)]
+        [StringLength(500)]
         public string Answer_B { get; set; }
 
-        [StringLength(100)]
+        [StringLength(500)]
         public string Answer_C { get; set; }
 
-        [StringLength(100)]
+        [StringLength(500)]
         public string Answer_D { get; set; }
 
         [StringLength(50)]

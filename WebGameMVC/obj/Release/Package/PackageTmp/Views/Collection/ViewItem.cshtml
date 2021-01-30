@@ -1,0 +1,13 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="my-container">
+    <img class="bg-collection" src="~/Assets/images/bgCollection.png" />
+    <div class="append">
+        <img src="@ViewBag.Item" />
+        <div class="backBtn" style="position:absolute;top:0;right:0">
+            <a style="text-decoration:none;color:black;" href="/Collection/Index?userID=@ViewBag.UserID&categoryID=@ViewBag.CateID">Back</a>
+        </div>
+    </div>
+</div>

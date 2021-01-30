@@ -56,6 +56,13 @@ namespace WebGameMVC
             );
 
             routes.MapRoute(
+                name: "UpdatePassUser",
+                url: "Account/UpdatePassword",
+                defaults: new { controller = "Account", action = "UpdatePassword", id = UrlParameter.Optional },
+                namespaces: new string[] { "WebGameMVC.Controllers" }
+            );
+
+            routes.MapRoute(
                 name: "UserInfor",
                 url: "Account/UserInfor",
                 defaults: new { controller = "Account", action = "UserInfor", id = UrlParameter.Optional },

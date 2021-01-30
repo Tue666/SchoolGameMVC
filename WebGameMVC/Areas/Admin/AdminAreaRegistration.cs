@@ -29,9 +29,23 @@ namespace WebGameMVC.Areas.Admin
             );
 
             context.MapRoute(
+                "Admin_InsertQuestion",
+                "Admin/{controller}/{action}/{id}",
+                new { Controller = "Question", action = "InsertQuestion", id = UrlParameter.Optional },
+                namespaces: new string[] { "WebGameMVC.Areas.Admin.Controllers" }
+            );
+
+            context.MapRoute(
                 "Admin_Question",
                 "Admin/{controller}/{action}/{id}",
                 new { Controller = "Question", action = "DetailStage", id = UrlParameter.Optional },
+                namespaces: new string[] { "WebGameMVC.Areas.Admin.Controllers" }
+            );
+
+            context.MapRoute(
+                "Admin_ListStage",
+                "Admin/{controller}/{action}/{id}",
+                new { Controller = "Question", action = "ListStage", id = UrlParameter.Optional },
                 namespaces: new string[] { "WebGameMVC.Areas.Admin.Controllers" }
             );
 

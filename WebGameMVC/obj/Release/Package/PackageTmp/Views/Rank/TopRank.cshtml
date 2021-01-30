@@ -1,0 +1,77 @@
+﻿@model List<WebGameMVC.Models.EF.Account>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script type="text/javascript">
+        function getID(ID) {
+            $('#partialDiv').load('/Rank/AvatarRank?userID=' + ID);
+        };
+    </script>
+}
+<div class="rank-container">
+    <div class="rank-wrapper">
+        <div class="wrapper-top">
+            @if (ViewBag.Type == 1)
+            {
+                <h1>Top 10 Level</h1>
+            }
+            else
+            {
+                <h1>Top 10 Rank</h1>
+            }
+        </div>
+        <div class="wrapper-bottom">
+            <div class="scroll-ranking">
+                <div style="width:100%;height:10%;display:flex;justify-content:center;align-items:center;color:#fff;">
+                    <span style="width:15%;height:50%;text-align:center;font-family:Papyrus">STT</span>
+                    <span style="width:45%;height:50%;text-align:center;font-family:Papyrus">Tên</span>
+                    <span style="width:15%;height:50%;text-align:center;font-family:Papyrus">Cấp</span>
+                    <span style="width:25%;height:50%;text-align:center;font-family:Papyrus">Kinh nghiệm</span>
+                </div>
+                <div class="scroll-ranking-bottom">
+                    @{
+                        var i = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <div class="child-scroll" onclick="getID(@item.ID)">
+                            @if (i == 1)
+                            {
+                                <span style="width:15%;height:50%;text-align:center;color:red;font-family:Papyrus">@i</span>
+                                <span style="width:45%;height:50%;text-align:center;color:red;font-family:Papyrus">@item.UserName</span>
+                                <span style="width:15%;height:50%;text-align:center;color:red;font-family:Papyrus">@item.Level</span>
+                                <span style="width:25%;height:50%;text-align:center;color:red;font-family:Papyrus">@item.Exp</span>
+                            }
+                            else if (i == 2)
+                            {
+                                <span style="width:15%;height:50%;text-align:center;color:yellow;font-family:Papyrus">@i</span>
+                                <span style="width:45%;height:50%;text-align:center;color:yellow;font-family:Papyrus">@item.UserName</span>
+                                <span style="width:15%;height:50%;text-align:center;color:yellow;font-family:Papyrus">@item.Level</span>
+                                <span style="width:25%;height:50%;text-align:center;color:yellow;font-family:Papyrus">@item.Exp</span>
+                            }
+                            else if (i == 3)
+                            {
+                                <span style="width:15%;height:50%;text-align:center;color:#479e47;font-family:Papyrus">@i</span>
+                                <span style="width:45%;height:50%;text-align:center;color:#479e47;font-family:Papyrus">@item.UserName</span>
+                                <span style="width:15%;height:50%;text-align:center;color:#479e47;font-family:Papyrus">@item.Level</span>
+                                <span style="width:25%;height:50%;text-align:center;color:#479e47;font-family:Papyrus">@item.Exp</span>
+                            }
+                            else
+                            {
+                                <span style="width:15%;height:50%;text-align:center;font-family:Papyrus">@i</span>
+                                <span style="width:45%;height:50%;text-align:center;font-family:Papyrus">@item.UserName</span>
+                                <span style="width:15%;height:50%;text-align:center;font-family:Papyrus">@item.Level</span>
+                                <span style="width:25%;height:50%;text-align:center;font-family:Papyrus">@item.Exp</span>
+                            }
+                        </div>
+                        i++;
+                    }
+                </div>
+            </div>
+            <div id="partialDiv" style="width:40%;height:100%;position:relative">
+
+            </div>
+        </div>
+    </div>
+</div>

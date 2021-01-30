@@ -1,0 +1,61 @@
+﻿@model WebGameMVC.Areas.Admin.Data.DTO.QuestionModel
+@{
+    var question = ViewBag.Question;
+}
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section jsFooterAdmin{
+    <script>
+        CKEDITOR.replaceAll('txtContent', { customConfig: '/Areas/Assets/js/plugins/ckeditor/config.js'})
+    </script>
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Cập nhật câu hỏi</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("UpdateQuestion", "Question", new { dungeonID = ViewBag.DungeonID, stageID = ViewBag.StageID, questionID = ViewBag.QuestionID }, FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Môn: </label>
+                    @Html.TextBoxFor(x => x.subID, new { @class = "form-control", @Value = (question.SubID == 1) ? "Toán" : "Toán" })
+                </div>
+                <div class="form-group">
+                    <label>Khối: </label>
+                    @Html.TextBoxFor(x => x.gradeID, new { @class = "form-control", @Value = (question.GradeID == 1) ? "10" : (question.GradeID == 2) ? "11" : "12" })
+                </div>
+                <div class="form-group">
+                    <label>Câu hỏi (dạng latex): </label>
+                    <textarea class="form-control txtContent" name="Question">@Html.Raw(question.Question1)</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Đáp án A (dạng latex): </label>
+                    <textarea class="form-control txtContent" name="answerA">@Html.Raw(question.Answer_A)</textarea>                </div>
+                <div class="form-group">
+                    <label>Đáp án B (dạng latex): </label>
+                    <textarea class="form-control txtContent" name="answerB">@Html.Raw(question.Answer_B)</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Đáp án C (dạng latex): </label>
+                    <textarea class="form-control txtContent" name="answerC">@Html.Raw(question.Answer_C)</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Đáp án D (dạng latex): </label>
+                    <textarea class="form-control txtContent" name="answerD">@Html.Raw(question.Answer_D)</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Đáp án đúng: </label>
+                    @Html.TextBoxFor(x => x.rightAnswer, new { @class = "form-control", @Value = question.Right_Answer })
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Cập nhật</button>
+                    <a href="/Admin/Question/DetailStage?dungeonID=@ViewBag.DungeonID&stageID=@ViewBag.StageID" class="btn btn-primary">Quay về</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

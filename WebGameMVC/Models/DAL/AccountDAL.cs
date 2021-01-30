@@ -51,6 +51,13 @@ namespace WebGameMVC.Models.DAL
             }
             return model.OrderByDescending(x => x.Rank).Where(x=>x.Status == true).Take(take).ToList();
         }
+        public bool UpdatePassword(long userID, string newPass)
+        {
+            var model = db.Accounts.SingleOrDefault(x => x.ID == userID);
+            model.PassWord = newPass;
+            db.SaveChanges();
+            return true;
+        }
         public bool UpdateRank(long userID, int? rank, int? rankExp)
         {
             var model = db.Accounts.SingleOrDefault(x => x.ID == userID);

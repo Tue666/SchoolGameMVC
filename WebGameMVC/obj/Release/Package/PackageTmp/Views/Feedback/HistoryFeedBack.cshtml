@@ -1,0 +1,37 @@
+﻿@model List<WebGameMVC.Models.EF.Feedback>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:80%;height:100%">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Người gửi</th>
+                        <th scope="col">Tiêu đề</th>
+                        <th scope="col">Nội dung</th>
+                        <th scope="col">Tác vụ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.ID</th>
+                            <td>@item.UserName</td>
+                            <td>@item.Title</td>
+                            <td>@item.Content</td>
+                            <td>@if (item.Status == false)
+                            { <a href="#" style="color:red"><i class="fa fa-exclamation"></i></a>}
+                            else { <a style="color:green" href="#"><i class="fa fa-check"></i></a>}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>

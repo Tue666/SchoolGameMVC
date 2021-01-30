@@ -1,0 +1,106 @@
+﻿@model List<WebGameMVC.Models.EF.Account>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section jsFooterAdmin{
+    <script type="text/javascript">
+        function showImage() {
+            $('#partialDivImage').load('/Admin/User/showImage');
+        }
+        function showeditAccount(accountID) {
+            $('#divPartialDivAccount').load('/Admin/User/editAccount?accountID=' + accountID);
+        }
+        function changeStatusAccount(accountID) {
+            $.ajax({
+                url: '@Url.Action("ChangeStatusAccount", "User")',
+                data: { accountID: accountID},
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        window.location.href = "/Admin/User/Index";
+                    }
+                }
+            })
+        }
+    </script>
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Toàn bộ tài khoản</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Mật khẩu</th>
+                        <th scope="col">Giới tính</th>
+                        <th scope="col">Hình</th>
+                        <th scope="col">Cánh</th>
+                        <th scope="col">Loại</th>
+                        <th scope="col">Trường</th>
+                        <th scope="col">Khối</th>
+                        <th scope="col">Lớp</th>
+                        <th scope="col">Cấp</th>
+                        <th scope="col">Năng lượng</th>
+                        <th scope="col">Hạng</th>
+                        <th scope="col">Tiền</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Tác vụ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.ID</th>
+                            <td>@item.UserName</td>
+                            <td>@item.PassWord</td>
+                            @{
+                                var sex = (item.Sex == 1) ? "Nam" : "Nữ";
+                            }
+                            <td>@sex</td>
+                            <td><img style="width:80px;height:80px;" src="@item.Avatar" /></td>
+                            @if (item.Wings != "")
+                            {
+                                <td><img style="width:50px;height:50px;" src="@item.Wings" /></td>
+                            }
+                            else
+                            {
+                                <td>Không</td>
+                            }
+                            @{
+                                var type = (item.Type == 0) ? "Người dùng" : "Admin";
+                            }
+                            <td>@type</td>
+                            <td>@item.SchoolName</td>
+                            <td>@item.Grade</td>
+                            <td>@item.Class</td>
+                            <td>@item.Level</td>
+                            <td>@item.Stamina</td>
+                            @{
+                                var rank = (item.Rank == 1) ? "Không" : (item.Rank == 2) ? "Đồng" : (item.Rank == 3) ? "Bạc" : (item.Rank == 4) ? "Vàng" : (item.Rank == 5) ? "Bạch Kim" : (item.Rank == 6) ? "Kim Cương" : (item.Rank == 7) ? "Cao Thủ" : "Thách Đấu";
+                            }
+                            <td>@rank</td>
+                            <td>@item.Money</td>
+                            <td>@item.Status</td>
+                            @{
+                                var status = (item.Status == true) ? "Khóa" : "Mở";
+                            }
+                            <td><a onclick="showeditAccount(@item.ID)" href="#">Sửa</a> | <a onclick="changeStatusAccount(@item.ID)" href="#">@status</a></td>
+                        </tr>
+                    }
+                    <tr><td><a href="#">Thêm</a></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="divPartialDivAccount" class="row">
+        
+    </div>
+</div>

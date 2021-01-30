@@ -1,0 +1,16 @@
+﻿@model WebGameMVC.Models.EF.Account
+@{ 
+    var rank = ViewBag.Rank;
+}
+
+<img style="width:100%;height:100%;" src="@Model.Avatar" />
+<img style="width:30%;height:27%;position:absolute;top:-15%;left:40%;" src="@rank.Medal" />
+@if (Model.Wings != "")
+{
+    <img style="width:30%;height:27%;position:absolute;top:0;left:0;" src="@Model.Wings" />
+}
+@if (Model.ID == 1)
+{
+    <img style="width:30%;height:30%;position:absolute;top:0;right:-5%;" src="~/Assets/images/pet/0.gif" />
+}
+<a style="padding:7px;border:1px solid #fff;position:absolute;bottom:0;left:0;text-decoration:none;" href="/Account/UserInfor?userID=@Model.ID">Xem</a>

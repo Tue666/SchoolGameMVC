@@ -72,14 +72,22 @@ namespace WebGameMVC.Controllers
                 account.Wings = "";
                 account.Type = 0;
                 account.SchoolName = user.userSchool;
-                account.Grade = Convert.ToInt32(user.userGrade);
+                if (user.userGrade == "10" || user.userGrade == "11" || user.userGrade == "12")
+                {
+                    account.Grade = Convert.ToInt32(user.userGrade);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Sai khối");
+                    return View("Regis");
+                }
                 account.Level = 1;
                 account.Exp = 0;
                 account.Title = "<span style=color:#fff;>Không<span/>";
                 account.Stamina = 100;
                 account.Rank = 1;
                 account.CreateDay = DateTime.Now;
-                account.Money = 100000;
+                account.Money = 1000;
                 account.Status = true;
                 account.RankExp = 0;
                 account.TotalBattle = 0;
@@ -95,7 +103,7 @@ namespace WebGameMVC.Controllers
                     {
                         new CollectionDAL().insertAvatar(account.ID, 2);
                     }
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Login");
                 }
                 else
                 {
